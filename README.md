@@ -1,38 +1,88 @@
-Role Name
-=========
+# Ansible Role: sysctl
 
-A brief description of the role goes here.
+> **NOTE**: Testing for this role is mostly done using Vagrant VMs locally. The CI is using [molecule](https://molecule.readthedocs.io/en/latest/)
+> but the role will not apply any sysctl configuration if the target is a container, since it will most likely fail (even on privileged containers).
 
-Requirements
-------------
+This role configures `sysctl` on a Linux system.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+None
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
 
-Dependencies
-------------
+```yaml
+sysctl_set: true
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+> If set to true, the token value will be verified before it's set.
 
-Example Playbook
-----------------
+```yaml
+sysctl_reload: true
+```
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+> If set to true, sysctl will be reloaded (using sysctl -p) after the sysctl_file is updated.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+sysctl_file: "/etc/sysctl.d/99-sysctl.conf"
+```
 
-License
--------
+> The absolute path to the file in which the configuration will be saved.
 
-BSD
+```yaml
+sysctl_entries: []
+# sysctl_entries:
+#   - name: net.ipv4.ip_forward
+#     value: 1
+#     state: present
+#     sysctl_set: "{{ sysctl_set }}"
+#     reload: "{{ sysctl_reload }}"
+#     sysctl_file: "{{ sysctl_file }}"
+```
 
-Author Information
-------------------
+> The token and the value to apply to this token. `name` and `value` are **required**, while the rest can be either configured globally (as shown above), or per entry. `state` is set to `present` by default, but can be changed to `absent` if you want to unset the token.
+>
+> **Note** that multiple entries can be specified at once, like so:
+>
+> ```yaml
+> sysctl_entries:
+>   - name: net.ipv4.ip_forward
+>     value: 1
+>   - name: kernel.kptr_restrict
+>     value: 1
+>     state: absent
+>     sysctl_set: false
+>     reload: true
+> ```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Dependencies
+
+None
+
+## Example Playbook
+
+```yaml
+- hosts: server
+  vars:
+    sysctl_entries:
+      - name: net.ipv4.ip_forward
+        value: 1
+        state: present
+
+      - name: kernel.kexec_load_disabled
+        value: 1
+        reload: true
+        sysctl_set: true
+        state: absent
+
+  roles:
+    - { role: chzerv.sysctl }
+```
+
+## License
+
+MIT / BSD
+
+## Author Information
+
+Xristos Zervakis
