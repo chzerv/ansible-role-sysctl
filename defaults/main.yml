@@ -1,2 +1,15 @@
 ---
-# defaults file for sysctl
+# Verify the token value before setting it, using sysctl.
+sysctl_set: true
+
+# Reload sysctl after the sysctl_file is updated.
+sysctl_reload: true
+
+# Where to save the configuration.
+sysctl_file: "/etc/sysctl.d/99-sysctl.conf"
+
+sysctl_entries: []
+# sysctl_entries:
+#   - name: net.ipv4.ip_forward
+#     value: 1
+#     state: present
