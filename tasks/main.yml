@@ -5,6 +5,9 @@
     - "{{ ansible_os_family }}.yml"
     - default.yml
 
+- name: Ensure variables are set correctly.
+  include_tasks: variable-check.yml
+
 - name: Install required packages.
   package:
     name: "{{ sysctl_required_packages }}"
