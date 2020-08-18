@@ -1,2 +1,30 @@
 ---
-# tasks file for sysctl
+- name: Set distribution family specific variables.
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+    - default.yml
+
+- name: Install required packages.
+  package:
+    name: "{{ sysctl_required_packages }}"
+    state: present
+
+- name: Apply configuration.
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_set: "{{ item.sysctl_set | default(sysctl_set) }}"
+    reload: "{{ item.reload | default(sysctl_reload) }}"
+    state: "{{ item.state | default('present') }}"
+    sysctl_file: "{{ sysctl_file }}"
+  with_items: "{{ sysctl_entries }}"
+  when:
+    - sysctl_entries is defined
+    - item.name is defined
+    - item.value is defined
+    - ansible_connection != "docker"
+    - ansible_connection != "podman"
+    - ansible_connection != "container"
+  loop_control:
+    label: "{{ item.name }} = {{ item.value }}"
