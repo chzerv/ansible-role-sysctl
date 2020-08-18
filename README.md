@@ -1,5 +1,8 @@
 # Ansible Role: sysctl
 
+![Ansible Molecule](https://github.com/chzerv/ansible-role-sysctl/workflows/Ansible%20Molecule/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > **NOTE**: Testing for this role is mostly done using Vagrant VMs locally. The CI is using [molecule](https://molecule.readthedocs.io/en/latest/)
 > but the role will not apply any sysctl configuration if the target is a container, since it will most likely fail (even on privileged containers).
 
