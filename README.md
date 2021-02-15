@@ -1,6 +1,6 @@
 # Ansible Role: sysctl
 
-![Ansible Molecule](https://github.com/chzerv/ansible-role-sysctl/workflows/Ansible%20Molecule/badge.svg)
+![Test and release.](https://github.com/chzerv/ansible-role-sysctl/workflows/Test%20and%20release./badge.svg?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Ansible Role](https://img.shields.io/ansible/role/50256?color=dodgerblue)](https://galaxy.ansible.com/chzerv/sysctl)
 
