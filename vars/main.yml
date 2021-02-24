@@ -1,0 +1,7 @@
+packages:
+  Debian:
+    - procps
+  default:
+    - procps-ng
+
+sysctl_required_packages: "{{ packages[ansible_os_family] | default(packages['default']) }}"
