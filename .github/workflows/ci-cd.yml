@@ -29,12 +29,14 @@ jobs:
             tag: latest
           - image: "centos7"
             tag: latest
+          - image: "fedora34"
+            tag: latest
           - image: "fedora33"
             tag: latest
           - image: "fedora32"
             tag: latest
-          # - image: "archlinux"
-          #   tag: latest
+          - image: "archlinux"
+            tag: latest
 
     steps:
       - name: Checkout.
