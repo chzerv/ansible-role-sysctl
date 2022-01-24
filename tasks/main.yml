@@ -10,6 +10,14 @@
     name: "{{ sysctl_required_packages }}"
     state: present
 
+- name: Ensure the /etc/sysctl.d/ directory exists.
+  file:
+    path: /etc/sysctl.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Apply configuration.
   sysctl:
     name: "{{ item.name }}"
