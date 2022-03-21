@@ -14,5 +14,5 @@
         reload: true
   tasks:
     - name: "Include sysctl"
-      include_role:
+      ansible.builtin.include_role:
         name: "ansible-role-sysctl"

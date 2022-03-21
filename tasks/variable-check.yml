@@ -1,18 +1,18 @@
 ---
 - name: Ensure that the variable 'sysctl_set' is set correctly.
-  assert:
+  ansible.builtin.assert:
     that:
       - sysctl_set | type_debug == "bool"
     fail_msg: "'sysctl_set' can be either 'true' or 'false'."
 
 - name: Ensure that the variable 'sysctl_reload' is set correctly.
-  assert:
+  ansible.builtin.assert:
     that:
       - sysctl_reload | type_debug == "bool"
     fail_msg: "'sysctl_reload' can be either 'true' or 'false'."
 
 - name: Ensure that 'state' is either 'present' or 'absent'.
-  assert:
+  ansible.builtin.assert:
     that:
       - item.state == "present" or item.state == "absent"
     fail_msg: "'state' can be either 'present' or 'absent'"
